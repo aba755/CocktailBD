@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Welcome to Cocktail Bored</h1>
+      <div class="search-bar">
+        <input
+          type="radio"
+          id="byingredient"
+          name="searchType"
+          value="ingredient"
+          checked
+        />
+        <label for="byingredient">Ingrédient</label>
+        <input type="radio" id="byName" name="searchType" value="name" />
+        <label for="byName">Cocktailname</label>
+        <input type="text" id="search" placeholder="Gin..." />
+        <button onclick="searchCocktail()">Search</button>
+      </div>
+      <div id="resultats"></div>
+    </div>
+
+    <script src="script/script.js"></script>
+  </body>
+</html>
