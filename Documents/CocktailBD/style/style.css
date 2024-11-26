@@ -1,0 +1,45 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color:white;
+    color:black;
+}
+
+#app {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20 px;
+
+}
+
+h1 {
+    text-align: center;
+    color:red;
+}
+
+.rechercehe {
+    display:flex;
+    align-items: center;
+    margin-bottom: 20 px;
+}
+input[type="text"]{
+    padding: 5px;
+    margin: 0 10 px;
+    width: 200px;
+}
+
+button {
+    padding: 5px 10 px;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor:pointer;
+}
+
+button:hover {
+    background-color: #a72d24;
+}
+
+#resultats {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
