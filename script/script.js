@@ -1,69 +1,82 @@
-async function searchCocktail() {
-  const query = document.getElementById("sarch").value;
-  const searchType = document.querySelector(
-    'input[name="searchType"]:checked'
-  ).value;
-  let url;
+const API_BASE = "https://www.thecocktaildb.com/api/json/v1/1/";
 
-  // Déterminer l'URL en fonction du type de recherche
-  if (searchType === "ingredient") {
-    url = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${query}";
-  } else {
-    url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}";
-  }
+let send = document.getElementById("send");
+let searchInput = document.getElementById("search");
+let searchByName = document.getElementById("byName");
 
-  const requestOptions = {
-    method: "GET",
-    redirect: "follow",
-  };
-  fetch(url, requestOptions)
-    .then((response) => response.json())
-    .then((result) => displayResults(result.drinks))
-    .catch((error) => console.error("Erreur:", error));
-}
+send.addEventListener("click", function(event) {
+  event.preventDefault();
+  console.log("Clicked");
+});
+
+searchInput.addEventListener("change", function(event) {
+  event.preventDefault();
+  console.log("Changed");
+});
+
+send.addEventListener("click", function() {
+  const query = searchInput.value.trim();
+  const searchType = searchByName.checked ? 'name' : 'ingredient';
+  if (!query) return alert("Veuillez entrer un terme de recherche.");  
+  const endpoint =
+    searchType === 'name'
+      ? `${API_BASE}search.php?s=${query}`
+      : `${API_BASE}filter.php?i=${query}`;  
+    fetch(endpoint)
+      .then((response) => response.json())
+      .then((data) => displayResults(data.drinks))
+      .catch(console.error);
+
+  
+});
+
 function displayResults(drinks) {
-  const resultsDiv = document.getElementById("results");
+  const resultsDiv = document.getElementById("resultats");
   resultsDiv.innerHTML = "";
   if (drinks) {
-    drinks.forEach((drink) => {
+    drinks.forEach(drink => {
+      // Pour la consigne, pour chaque cocktail: une image, le nom et un bouton
+
       const cocktailDiv = document.createElement("div");
       cocktailDiv.classList.add("cocktail");
 
       const cocktailName = document.createElement("h2");
-      cocktailName.textContent = drink.strDrink;
+      cocktailName.innerHTML = drink.strDrink;
       cocktailDiv.appendChild(cocktailName);
 
-      //Afficher les details si la recherche est par nom
-      if (drink.strinstructions) {
-        const instructions = document.createElement("p");
-        instructions.textContent = drink.strinstructions;
-        cocktailDiv.appendChild(instructions);
-      }
+      const cocktailImage = document.createElement("img");
+      cocktailImage.src = drink.strDrinkThumb;
+      cocktailImage.alt = drink.strDrink;
+
+      cocktailDiv.appendChild(cocktailImage);
+
+      const detailsButton = document.createElement("button");
+      detailsButton.textContent = "Voir les détails";
+
+      detailsButton.addEventListener("click", () => {
+        
+        displayIngredients(drinks);
+        alert(drink.strInstructions);
+      });
+
+      cocktailDiv.appendChild(detailsButton);
 
       resultsDiv.appendChild(cocktailDiv);
+
+      
     });
   } else {
     resultsDiv.textContent = "Aucun cocktail trouvé.";
   }
 }
+function displayIngredients(drink){
 
-function displayResults(drinks) {
-  const resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML;
-  if (drinks) {
-    drinks.forEach((drink) => {
-      const cocktailDiv = document.createElement("div");
+  const infosDiv = document.getElementById("infos");
+  infosDiv.innerHTML =""; // Afficher les details
 
-      cocktailDiv.classList.add("cocktail");
+  const ingredientsTitle = document.createElement("h3");
+  ingredientsTitle.textContent = "Ingrédients";
 
-      const cocktailName = document.createElement("h2");
-      cocktailName.textContent = drink.strDrink;
-      cocktailDiv.appendChild(cocktailName);
+  infosDiv.appendChild(ingredientsTitle);
 
-      //Afficher les details si la recherche est par nom
-      if (drink.strinstructions) {
-        const instructions = document.createElement("p");
-      }
-    });
-  }
 }
