@@ -1,8 +1,16 @@
+
+
+const modalInstructions = document.getElementById('modalInstructions');
+const modalIngredients = document.getElementById('modalIngredients');
+const modalImage = document.getElementById('modalImage');
+const modalTitle = document.getElementById('modalTitle');
 const API_BASE = "https://www.thecocktaildb.com/api/json/v1/1/";
 
 let send = document.getElementById("send");
 let searchInput = document.getElementById("search");
 let searchByName = document.getElementById("byName");
+
+
 
 send.addEventListener("click", function(event) {
   event.preventDefault();
@@ -39,6 +47,8 @@ function displayResults(drinks) {
 
       const cocktailDiv = document.createElement("div");
       cocktailDiv.classList.add("cocktail");
+      
+
 
       const cocktailName = document.createElement("h2");
       cocktailName.innerHTML = drink.strDrink;
@@ -51,12 +61,12 @@ function displayResults(drinks) {
       cocktailDiv.appendChild(cocktailImage);
 
       const detailsButton = document.createElement("button");
-      detailsButton.textContent = "Voir les détails";
+      detailsButton.innerHTML = '<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal"> Voir les détails</button>';
 
       detailsButton.addEventListener("click", () => {
         
         displayIngredients(drinks);
-        alert(drink.strInstructions);
+        // alert(drink.strInstructions);
       });
 
       cocktailDiv.appendChild(detailsButton);
@@ -78,5 +88,4 @@ function displayIngredients(drink){
   ingredientsTitle.textContent = "Ingrédients";
 
   infosDiv.appendChild(ingredientsTitle);
-
 }
